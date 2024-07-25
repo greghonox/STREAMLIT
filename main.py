@@ -1,24 +1,22 @@
 import streamlit as st
 from requests import get
 import pandas as pd
-import plotly.express as px
 
+import plotly.express as px
 
 # set config widmode
 st.set_page_config(
     page_title="DashBoard de Vendas",
-    page_icon=":shop_trolley:",
+    page_icon=":shop_troley:",
     layout="wide",
     initial_sidebar_state="auto",
 )
-
 
 st.title("DashBoard de Vendas :shop_troley:")
 st.write("Este é um DashBoard interativo para análise de vendas")
 
 url = "https://labdados.com/produtos"
 response = get(url)
-
 
 if response.status_code == 200:
     data = response.json()
@@ -27,16 +25,18 @@ if response.status_code == 200:
         data_frame["Data da Compra"], format="%d/%m/%Y"
     )
 
-    col_man1, col_man2 = st.columns(2)
-    with col_man1:
+    col_index1, col_index2 = st.columns(2)
+    with col_index1:
         st.metric("Receitas", "R$ {:.2f}".format(data_frame["Preço"].sum()))
-    with col_man2:
+
+    with col_index2:
         st.metric("Quantidade de Produtos", data_frame.shape[0])
 
     tab1, tab2 = st.tabs(["Charts", "Table"])
-    col1, col2, col3, col4 = st.columns(4)
 
     with tab1:
+        col1, col2, col3, col4 = st.columns(4)
+
         with col1:
             table_income = data_frame.groupby("Local da compra")["Preço"].sum()
             income_states = (
