@@ -7,8 +7,10 @@
             "request": "launch",
             "program": "${workspaceFolder}/.venv/bin/streamlit",
             "args": [
+                "--log_level",
+                "debug",
                 "run",
-                "${workspaceFolder}/main.py"
+                "${workspaceFolder}/main.py",
             ],
             "console": "integratedTerminal"
         }
