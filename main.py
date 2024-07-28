@@ -14,148 +14,52 @@ st.set_page_config(
 st.title("DashBoard de Vendas 🔸")
 st.write("Este é um DashBoard interativo para análise de vendas")
 
-data = pd.read_csv("2024-07-27T23-35_export.csv")
+data = pd.read_csv("resources/2024-07-27T23-35_export.csv")
 data_frame = pd.DataFrame.from_dict(data)
 data_frame["Data da Compra"] = pd.to_datetime(data_frame["Data da Compra"])
 
 ### Side bar
-locations = [
-    "TODAS",
-    "RR",
-    "RJ",
-    "GO",
-    "RN",
-    "PE",
-    "RS",
-    "SP",
-    "MG",
-    "PI",
-    "AC",
-    "RO",
-    "PR",
-    "MT",
-    "AL",
-    "DF",
-    "AM",
-    "ES",
-    "PA",
-    "SC",
-    "MA",
-    "SE",
-    "TO",
-    "AP",
-    "CE",
-    "BA",
-    "MS",
-    "PB",
-]
-sellers = [
-    "TODOS",
-    "Juliana Costa",
-    "Bruno Rodrigues",
-    "Rafael Costa",
-    "Isabella Pereira",
-    "Bianca Santos",
-    "Pedro Gomes",
-    "Mariana Ferreira",
-    "Lucas Oliveira",
-    "João Souza",
-    "Beatriz Moraes",
-    "Felipe Santos",
-    "Thiago Silva",
-    "Larissa Alves",
-    "Camila Ribeiro",
-]
-products = [
-    "TODOS",
-    "Tablet ABXY",
-    "Dinossauro Rex",
-    "Headset",
-    "Jogo de panelas",
-    "Iniciando em programação",
-    "Guarda roupas",
-    "Cubo mágico 8x8",
-    "Cadeira de escritório",
-    "Panela de pressão",
-    "Dashboards com Power BI",
-    "Poltrona",
-    "Celular Plus X42",
-    "Impressora",
-    "Smart TV",
-    "Carrinho controle remoto",
-    "Mochila",
-    "Cama king",
-    "Kit banquetas",
-    "Copo térmico",
-    "Xadrez de madeira",
-    "Bola de vôlei",
-    "Assistente virtual",
-    "Smartwatch",
-    "Violão",
-    "Micro-ondas",
-    "Jogo de copos",
-    "Modelagem preditiva",
-    "Mesa de centro",
-    "Fone de ouvido",
-    "Secadora de roupas",
-    "Cômoda",
-    "Lava louças",
-    "Pandeiro",
-    "Blocos de montar",
-    "Ciência de dados com python",
-    "Bicicleta",
-    "TV Led UHD 4K",
-    "Boneca bebê",
-    "Celular ABXY",
-    "Faqueiro",
-    "Corda de pular",
-    "Bola de basquete",
-    "Geladeira",
-    "Jogo de tabuleiro",
-    "Mesa de jantar",
-    "Lavadora de roupas",
-    "Guitarra",
-    "Sofá retrátil",
-    "Bateria",
-    "Fogão",
-    "Cama box",
-]
-categories = [
-    "TODOS",
-    "eletrodomesticos",
-    "instrumentos musicais",
-    "eletronicos",
-    "utilidades domesticas",
-    "esporte e lazer",
-    "livros",
-    "moveis",
-    "brinquedos",
-]
+locations = ["Todas"] + list(data_frame["Local da compra"].unique())
+sellers = data_frame["Vendedor"].unique()
+products = ["Todos"] + list(data_frame["Produto"].unique())
+categories = ["Todos"] + list(data_frame["Categoria do Produto"].unique())
+type_payment = data_frame["Tipo de pagamento"].unique()
 
 st.sidebar.title("Filtros")
 
 location_selected = st.sidebar.selectbox("Local da Compra", locations)
-seller_selected = st.sidebar.selectbox("Vendedors", sellers)
+seller_selected = st.sidebar.multiselect(
+    "Vendedores", sellers, placeholder="Vendedores"
+)
 prodcuts_selected = st.sidebar.selectbox("Produtos", products)
 categories_selected = st.sidebar.selectbox("Categoria do Produto", categories)
+type_payment_selected = st.sidebar.multiselect(
+    "Tipo de Pagamento", type_payment, placeholder="Tipo de Pagamento"
+)
+
 data_frame = (
     data_frame[data_frame["Local da compra"] == location_selected]
-    if location_selected != "TODAS"
+    if location_selected != "Todas"
     else data_frame
 )
 data_frame = (
-    data_frame[data_frame["Vendedor"] == seller_selected]
-    if seller_selected != "TODOS"
+    data_frame[data_frame["Vendedor"].isin(seller_selected)]
+    if seller_selected != []
     else data_frame
 )
 data_frame = (
     data_frame[data_frame["Produto"] == prodcuts_selected]
-    if prodcuts_selected != "TODOS"
+    if prodcuts_selected != "Todos"
     else data_frame
 )
 data_frame = (
     data_frame[data_frame["Categoria do Produto"] == categories_selected]
-    if categories_selected != "TODOS"
+    if categories_selected != "Todos"
+    else data_frame
+)
+data_frame = (
+    data_frame[data_frame["Tipo de pagamento"].isin(type_payment_selected)]
+    if type_payment_selected != []
     else data_frame
 )
 
