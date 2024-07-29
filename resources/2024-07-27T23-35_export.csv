@@ -1,4 +1,4 @@
-﻿,Produto,Categoria do Produto,Preço,Frete,Data da Compra,Vendedor,Local da compra,Avaliação da compra,Tipo de pagamento,Quantidade de parcelas,lat,lon
+﻿Produto,Categoria do Produto,Preço,Frete,Data da Compra,Vendedor,Local da compra,Avaliação da compra,Tipo de pagamento,Quantidade de parcelas,lat,lon
 0,Modelagem preditiva,livros,92.45,5.6096965236,2020-01-01T00:00:00.000,Thiago Silva,BA,1,cartao_credito,3,-13.29,-41.71
 1,Iniciando em programação,livros,43.84,0,2020-01-01T00:00:00.000,Mariana Ferreira,SP,5,cartao_credito,1,-22.19,-48.79
 2,Pandeiro,instrumentos musicais,87.18,2.2265117938,2020-01-01T00:00:00.000,Thiago Silva,RJ,4,cartao_credito,4,-22.25,-42.66

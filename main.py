@@ -1,7 +1,15 @@
 import streamlit as st
 import pandas as pd
-
 import plotly.express as px
+
+
+@st.cache_data
+def load_data() -> pd.DataFrame:
+    data = pd.read_csv("resources/2024-07-27T23-35_export.csv")
+    data_frame = pd.DataFrame.from_dict(data)
+    data_frame["Data da Compra"] = pd.to_datetime(data_frame["Data da Compra"])
+    return data_frame
+
 
 # set config widmode
 st.set_page_config(
@@ -14,10 +22,7 @@ st.set_page_config(
 st.title("DashBoard de Vendas 🔸")
 st.write("Este é um DashBoard interativo para análise de vendas")
 
-data = pd.read_csv("resources/2024-07-27T23-35_export.csv")
-data_frame = pd.DataFrame.from_dict(data)
-data_frame["Data da Compra"] = pd.to_datetime(data_frame["Data da Compra"])
-
+data_frame = load_data()
 ### Side bar
 locations = ["Todas"] + list(data_frame["Local da compra"].unique())
 sellers = data_frame["Vendedor"].unique()
