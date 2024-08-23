@@ -11,6 +11,10 @@ def load_data() -> pd.DataFrame:
     return data_frame
 
 
+def clear_cache():
+    st.cache_resource.clear()
+
+
 # set config widmode
 st.set_page_config(
     page_title="DashBoard de Vendas",
